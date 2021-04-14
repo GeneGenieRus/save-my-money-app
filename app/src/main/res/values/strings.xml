@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Save my money</string>
+
+    <!-- Main Activity-->
+    <string name="not_logged_msg">Вы не залогинены</string>
+    <string name="logged_msg">Вы залогинены</string>
+    <string name="create_document_success_msg">Запись успешно создана</string>
+
+    <!-- List Activity -->
+    <string name="list_activity_remove_menu_action">Удалить запись</string>
+
+    <!-- CATEGORIES -->
+    <string name="categories_name_0">Еда</string>
+    <string name="categories_name_1">Топливо</string>
+    <string name="categories_name_2">Одежда</string>
+    <string name="categories_name_3">Транспорт</string>
+    <string name="categories_name_4">Медицина</string>
+    <string name="categories_name_5">Подарки</string>
+    <string name="categories_name_6">Развлечения</string>
+    <string name="categories_name_7">Дом</string>
+    <string name="categories_name_8">Машина</string>
+    <string name="categories_name_9">Путешествия</string>
+    <string name="categories_name_10">Прочее</string>
+</resources>
