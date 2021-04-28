@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.genegenie.savemymoney.model.Expense
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.SetOptions
 
 class ExpenseListActivity : AppCompatActivity() {
 
@@ -32,8 +32,7 @@ class ExpenseListActivity : AppCompatActivity() {
     private fun getAllRecords() {
         Log.d(TAG, "getAllRecords()")
 
-        db.collection(Utils.getCurrentMonthCollectionName())
-            .orderBy("date", Query.Direction.DESCENDING)
+        db.collection("months").document("2021-04").collection("expenses")
             .get()
             .addOnSuccessListener { documents ->
                 this.runOnUiThread {
@@ -61,13 +60,26 @@ class ExpenseListActivity : AppCompatActivity() {
     override fun onContextItemSelected(item: MenuItem): Boolean {
         if (item.itemId == MENU_ACTION_REMOVE_ID) {
             val record = listViewData[item.order]
-            db.collection(Utils.getCurrentMonthCollectionName()).document(record.id!!)
-                .delete()
+
+
+            val monthRef = db.collection(Constants.DB_COLLECTION_MONTHS).document(Utils.getCurrentMonthCollectionName())
+            val expenseRef = db.collection(Constants.DB_COLLECTION_MONTHS).document(Utils.getCurrentMonthCollectionName())
+                .collection(Constants.DB_COLLECTION_EXPENSES).document(record.id!!)
+
+            db.runTransaction {
+                val monthMap = it.get(monthRef).data?:HashMap()
+                val expense = it.get(expenseRef).toObject(Expense::class.java)
+
+                monthMap.computeIfPresent("total") { _, v -> (v as Number).toInt() - expense?.amount!! }
+                monthMap.computeIfPresent("category_${expense?.category}") { _ , v -> (v as Number).toInt() - expense?.amount!! }
+                it.set(monthRef, monthMap, SetOptions.merge())
+                it.delete(expenseRef)
+            }
                 .addOnSuccessListener {
                     listViewData.removeAt(item.order)
                     expenseAdapter.notifyItemRemoved(item.order)
                 }
-                .addOnFailureListener { e ->
+                .addOnFailureListener{e ->
                     Log.e(TAG, "onContextItemSelected(): item=$item", e)
                     Toast.makeText(this, e.localizedMessage, Toast.LENGTH_SHORT).show()
                 }

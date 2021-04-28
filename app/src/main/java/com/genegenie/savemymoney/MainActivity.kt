@@ -9,6 +9,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.genegenie.savemymoney.Constants.CATEGORY_CHOOSE_REQUEST_CODE
 import com.genegenie.savemymoney.Constants.CATEGORY_CHOOSE_RESULT_CODE
+import com.genegenie.savemymoney.Constants.DB_COLLECTION_EXPENSES
+import com.genegenie.savemymoney.Constants.DB_COLLECTION_MONTHS
 import com.genegenie.savemymoney.Constants.SIGN_IN_REQUEST_CODE
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -18,8 +20,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.ktx.Firebase
 import java.util.*
+import kotlin.collections.HashMap
 
 
 class MainActivity : AppCompatActivity() {
@@ -103,25 +107,35 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun createExpense(data: Intent?) {
+
+        val category = data?.extras?.get("category") as Int?
+        val amount = data?.extras?.get("amount") as Int?
         val expenseValuesMap = hashMapOf(
-            "category" to data?.extras?.get("category") as Int?,
+            "category" to category,
             "description" to data?.extras?.get("description") as String?,
-            "amount" to data?.extras?.get("amount") as Int?,
+            "amount" to amount,
             "date" to Date(),
             "account" to mAuth.currentUser?.email
         )
 
         val db: FirebaseFirestore = FirebaseFirestore.getInstance()
-        db.collection(Utils.getCurrentMonthCollectionName())
-            .add(expenseValuesMap)
-            .addOnSuccessListener { documentReference ->
-                Toast.makeText(
-                    this,
-                    getString(R.string.create_document_success_msg),
-                    Toast.LENGTH_SHORT
-                ).show()
+
+        val monthRef = db.collection(DB_COLLECTION_MONTHS).document(Utils.getCurrentMonthCollectionName())
+        val expenseRef = db.collection(DB_COLLECTION_MONTHS).document(Utils.getCurrentMonthCollectionName())
+            .collection(DB_COLLECTION_EXPENSES).document()
+
+        db.runTransaction {
+            val monthMap = it.get(monthRef).data?:HashMap()
+            monthMap.merge("total", amount?:0) { a , b -> (a as Number).toInt() + (b as Number).toInt() }
+            monthMap.merge("category_${category}", amount?:0) { a , b -> (a as Number).toInt() + (b as Number).toInt() }
+            it.set(monthRef, monthMap, SetOptions.merge())
+            it.set(expenseRef, expenseValuesMap)
+        }
+            .addOnSuccessListener {
+                Toast.makeText(this, getString(R.string.create_document_success_msg),
+                    Toast.LENGTH_SHORT).show()
             }
-            .addOnFailureListener { e ->
+            .addOnFailureListener{e ->
                 Log.w(TAG, "Error creating document", e)
                 Toast.makeText(this, e.localizedMessage, Toast.LENGTH_LONG).show()
             }
