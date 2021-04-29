@@ -26,7 +26,8 @@
         android:id="@+id/record_item_inner_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="1dp">
+        android:layout_marginBottom="1dp"
+        android:background="#DFDEDA">
 
         <TextView
             android:id="@+id/record_item_description"
