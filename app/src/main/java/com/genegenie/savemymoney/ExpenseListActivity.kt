@@ -8,8 +8,10 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.genegenie.savemymoney.Constants.DB_COLLECTION_MONTHS
 import com.genegenie.savemymoney.model.Expense
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.SetOptions
 
 class ExpenseListActivity : AppCompatActivity() {
@@ -31,8 +33,8 @@ class ExpenseListActivity : AppCompatActivity() {
 
     private fun getAllRecords() {
         Log.d(TAG, "getAllRecords()")
-
-        db.collection("months").document("2021-04").collection("expenses")
+        db.collection(DB_COLLECTION_MONTHS).document(Utils.getCurrentMonthCollectionName()).collection(Constants.DB_COLLECTION_EXPENSES)
+            .orderBy("date", Query.Direction.DESCENDING)
             .get()
             .addOnSuccessListener { documents ->
                 this.runOnUiThread {
@@ -62,8 +64,8 @@ class ExpenseListActivity : AppCompatActivity() {
             val record = listViewData[item.order]
 
 
-            val monthRef = db.collection(Constants.DB_COLLECTION_MONTHS).document(Utils.getCurrentMonthCollectionName())
-            val expenseRef = db.collection(Constants.DB_COLLECTION_MONTHS).document(Utils.getCurrentMonthCollectionName())
+            val monthRef = db.collection(DB_COLLECTION_MONTHS).document(Utils.getCurrentMonthCollectionName())
+            val expenseRef = db.collection(DB_COLLECTION_MONTHS).document(Utils.getCurrentMonthCollectionName())
                 .collection(Constants.DB_COLLECTION_EXPENSES).document(record.id!!)
 
             db.runTransaction {

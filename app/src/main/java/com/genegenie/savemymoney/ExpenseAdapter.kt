@@ -19,10 +19,14 @@ package com.genegenie.savemymoney
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.genegenie.savemymoney.model.Expense
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 
 class ExpenseAdapter(val list: List<Expense>, val context : AppCompatActivity) :
@@ -35,7 +39,10 @@ class ExpenseAdapter(val list: List<Expense>, val context : AppCompatActivity) :
         private val descriptionView: TextView = itemView.findViewById(R.id.record_item_description)
         private val accountView: TextView = itemView.findViewById(R.id.record_item_account)
         private val dateView: TextView = itemView.findViewById(R.id.record_item_date)
+        private val innerFrame: FrameLayout = itemView.findViewById(R.id.record_item_inner_frame)
+
         private val simpleDateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm")
+        private val mAuth: FirebaseAuth = Firebase.auth
 
         init {
             view.setOnCreateContextMenuListener(context)
@@ -48,6 +55,9 @@ class ExpenseAdapter(val list: List<Expense>, val context : AppCompatActivity) :
             descriptionView.text = expense.description?:""
             accountView.text = expense.account?:""
             dateView.text = if (expense.date != null) simpleDateFormat.format(expense.date) else ""
+            if (mAuth.currentUser?.email == expense.account) {
+                innerFrame.setBackgroundColor(context.getColor(R.color.expense_background))
+            }
         }
     }
 

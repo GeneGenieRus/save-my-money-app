@@ -23,10 +23,10 @@
     <!-- Add in TextView to display flower name   -->
 
     <FrameLayout
+        android:id="@+id/record_item_inner_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="1dp"
-        android:background="#FFFFFF">
+        android:layout_marginBottom="1dp">
 
         <TextView
             android:id="@+id/record_item_description"
