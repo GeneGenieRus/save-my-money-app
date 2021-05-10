@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:text="Description abcde dkaj ;idf j d"
+            android:text="[Description]"
             android:textColor="#612E2E"
             android:textSize="10sp" />
 
@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|top"
-            android:text="24.04.2211"
+            android:text="[24.04.2211]"
             android:textColor="#612E2E"
             android:textSize="14sp" />
 
@@ -52,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
-            android:text="genegeneiedev@gmail.com"
+            android:text="[genegeneiedev@gmail.com]"
             android:textColor="#612E2E"
             android:textSize="10sp" />
 
@@ -61,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|top"
-            android:text="500"
+            android:text="[500]"
             android:textColor="#612E2E"
             android:textSize="24sp" />
 
@@ -70,7 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top|left"
-            android:text="Food"
+            android:text="[Food]"
             android:textColor="#612E2E"
             android:textSize="24sp" />
     </FrameLayout>

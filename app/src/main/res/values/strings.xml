@@ -22,4 +22,27 @@
     <string name="categories_name_9">Путешествия</string>
     <string name="categories_name_10">Транспорт</string>
     <string name="categories_name_11">Прочее</string>
+    <string name="categories_name_12">Красота / уход</string>
+    <string name="categories_name_13">Большая покупка</string>
+
+
+    <!-- MONTH TOTAL ACTIVITY -->
+    <string name="angleLeft"><![CDATA[<]]></string>
+    <string name="angleRight"><![CDATA[>]]></string>
+    <string name="categoryTextTemplate">%s = %d</string>
+    <string name="month_0">Январь</string>
+    <string name="month_1">Февраль</string>
+    <string name="month_2">Март</string>
+    <string name="month_3">Апрель</string>
+    <string name="month_4">Май</string>
+    <string name="month_5">Июнь</string>
+    <string name="month_6">Июль</string>
+    <string name="month_7">Август</string>
+    <string name="month_8">Сентябрь</string>
+    <string name="month_9">Октябрь</string>
+    <string name="month_10">Ноябрь</string>
+    <string name="month_11">Декабрь</string>
+
+
+
 </resources>

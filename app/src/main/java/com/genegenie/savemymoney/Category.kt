@@ -12,7 +12,9 @@ enum class Category(val id: Int, val resId : Int) {
     CAR(8, R.string.categories_name_8),
     TRAVELS(9, R.string.categories_name_9),
     TRANSPORT(10, R.string.categories_name_10),
-    OTHER(11, R.string.categories_name_11);
+    OTHER(11, R.string.categories_name_11),
+    BEAUTY_CARE(12, R.string.categories_name_12),
+    BIG_PURCHASE(13, R.string.categories_name_13);
 
     companion object {
         fun getFromId (id : Int?): Category? {

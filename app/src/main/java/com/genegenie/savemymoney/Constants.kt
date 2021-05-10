@@ -9,5 +9,7 @@ object Constants {
     const val PRICE_INPUT_RESULT_CODE = 203
 
     const val DB_COLLECTION_MONTHS = "months"
+    const val DB_COLLECTION_MONTHS_TOTAL = "total"
+    const val DB_COLLECTION_MONTHS_CATEGORY_PREFIX = "category_"
     const val DB_COLLECTION_EXPENSES = "expenses"
 }

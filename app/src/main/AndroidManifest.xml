@@ -12,10 +12,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SaveMyMoney">
-        <activity android:name=".ExpenseListActivity"/>
-        <activity android:name=".PriceInputActivity"/>
-        <activity android:name=".CategoryChooseActivity"/>
+        android:theme="@style/Theme.SaveMyMoney" >
+        <activity android:name=".MonthTotalActivity" />
+        <activity android:name=".ExpenseListActivity" />
+        <activity android:name=".PriceInputActivity" />
+        <activity android:name=".CategoryChooseActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"

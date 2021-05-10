@@ -6,12 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".CategoryChooseActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <LinearLayout
         android:id="@+id/categoriesLinearLayoutId"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+>
 
 
 <!--            <Button
@@ -45,5 +49,6 @@
                 android:layout_height="wrap_content"
                 android:text="Категория5" />-->
     </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,6 +11,8 @@ import com.genegenie.savemymoney.Constants.CATEGORY_CHOOSE_REQUEST_CODE
 import com.genegenie.savemymoney.Constants.CATEGORY_CHOOSE_RESULT_CODE
 import com.genegenie.savemymoney.Constants.DB_COLLECTION_EXPENSES
 import com.genegenie.savemymoney.Constants.DB_COLLECTION_MONTHS
+import com.genegenie.savemymoney.Constants.DB_COLLECTION_MONTHS_CATEGORY_PREFIX
+import com.genegenie.savemymoney.Constants.DB_COLLECTION_MONTHS_TOTAL
 import com.genegenie.savemymoney.Constants.SIGN_IN_REQUEST_CODE
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -65,6 +67,9 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, ExpenseListActivity::class.java))
         }
 
+        findViewById<Button>(R.id.openMonthTotalId).setOnClickListener {
+            startActivity(Intent(this, MonthTotalActivity::class.java))
+        }
     }
 
     private fun updateTextView() {
@@ -126,8 +131,8 @@ class MainActivity : AppCompatActivity() {
 
         db.runTransaction {
             val monthMap = it.get(monthRef).data?:HashMap()
-            monthMap.merge("total", amount?:0) { a , b -> (a as Number).toInt() + (b as Number).toInt() }
-            monthMap.merge("category_${category}", amount?:0) { a , b -> (a as Number).toInt() + (b as Number).toInt() }
+            monthMap.merge(DB_COLLECTION_MONTHS_TOTAL, amount?:0) { a, b -> (a as Number).toInt() + (b as Number).toInt() }
+            monthMap.merge(DB_COLLECTION_MONTHS_CATEGORY_PREFIX + category, amount?:0) { a , b -> (a as Number).toInt() + (b as Number).toInt() }
             it.set(monthRef, monthMap, SetOptions.merge())
             it.set(expenseRef, expenseValuesMap)
         }
